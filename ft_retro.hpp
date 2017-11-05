@@ -22,7 +22,7 @@
 # include "Aircraft.class.hpp"
 # include "AllObjects.class.hpp"
 # include "EnemySmall.class.hpp"
-// # include "EnemyBig.class.hpp"
+# include "EnemyBig.class.hpp"
 # include "Weapon.class.hpp"
 
 #endif

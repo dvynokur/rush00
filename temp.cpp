@@ -43,11 +43,15 @@ void	run()
 	getmaxyx(wnd, y, x);
 	Aircraft	ai(x, y);
 	EnemySmall	e[30];
+	EnemyBig	eb[10];
 	Weapon		w[500];
 	int sp = 0;
 	for (int i = 0; i < 30; i++)
 		e[i] = EnemySmall(x, y);
+	for (int i = 0; i < 10; i++)
+		eb[i] = EnemyBig(x, y);
 	int i = 0;
+	int l = 0;
 	clear();
 	while(1) {
 		mvwprintw(wnd, 2, x/2, "Score = %d   Lives = %d", score, ai.get_lives());
@@ -57,7 +61,21 @@ void	run()
 			case 27:
 				exit_requested = true;
 				break;
-			
+			case 'p':
+				mvprintw( 2, 10,"[ PAUSED ]");
+				// refresh();p
+				while (1)
+				{
+					in_char = getch();
+					if (in_char == 27)
+					{
+						exit_requested = true;
+						break ;
+					}
+					if (in_char == 'p')
+						break;
+				}
+				break;
 			case ' ':
 				if (sp < 500)
 					w[sp] = Weapon(ai.get_x1() + 1, ai.get_y1());
@@ -85,8 +103,6 @@ void	run()
 			default:
 				break;
 		}
-
-
 		for (int k = 0; k < i; k++)
 		{
 			if (ai.get_lives() == 0)
@@ -99,8 +115,6 @@ void	run()
 			
 			for (int j = 0; j < sp; j++)
 			{
-				// if (w[j] == e[k])
-				// 	printf("!!!\n");
 				if (w[j] == e[k] && w[j].get_f() == 1)
 				{
 					score++;
@@ -110,8 +124,14 @@ void	run()
 				}
 			}
 		}
-
-
+		for (int k = 0; k < l; k++)
+		{
+			eb[k].removing();
+			eb[k].changing_xy(-1, 0);
+			eb[k].moving();
+			if (eb[k].get_x6() == 0)
+				eb[k].rewriting_xy(x, (rand() % y) - 3);
+		}
 		for (int k = 0; k < i; k++)
 		{
 			e[k].removing();
@@ -120,33 +140,24 @@ void	run()
 			if (e[k].get_x6() == 0)
 				e[k].rewriting_xy(x, (rand() % y) - 3);
 		}
-
-
-
-
 		for (int k = 0; k < sp && k < 500; k++)
 		{
-			// w[k].removing();
 			mvaddch(w[k].get_y(), w[k].get_x(), ' ');
-			// w[k].changing_xy(1, 0);
 			w[k].set_x(w[k].get_x() + 1);
 			if (w[k].get_f() == 1)
-				// w[k].moving();
 				mvaddch(w[k].get_y(), w[k].get_x(), w[k].getType());
 		}
-
-
-
 		ai.moving();
-
 		tick++;
 		if (tick % 10 == 0)
 			i++;
+		if (tick % 50 == 0)
+			l++;
+		if (l > 10)
+			l = 10;
 		if (i > 20)
 			i = 20;
-
 		box(wnd, 0,0);
-
 		refresh();
 		if (exit_requested) break;
 		usleep(40000);
