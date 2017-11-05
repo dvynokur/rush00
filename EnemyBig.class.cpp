@@ -44,7 +44,6 @@ EnemyBig::EnemyBig(int width, int height)
 	set_y5(r);
 	set_x6(width + 1);
 	set_y6(r - 1);
-	std::cout << "EnemyBig constructor called" << std::endl;
 }
 
 EnemyBig::EnemyBig(EnemyBig const &src) {

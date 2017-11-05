@@ -17,7 +17,12 @@ public:
 	EnemySmall(EnemySmall const &src);
 	~EnemySmall();
 	EnemySmall		&operator=(EnemySmall const &rhs);
-	
+	void			rewriting_xy(int x, int y);
+	void			set_flag(int n);
+	int				get_flag(void) const;
+
+private:
+	int				_flag;
 };
 
 #endif

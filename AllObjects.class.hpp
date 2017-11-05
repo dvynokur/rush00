@@ -18,9 +18,14 @@ public:
 
 // operators:
 	AllObjects		&operator=(AllObjects const &rhs);
+	bool			operator==(AllObjects &rhs);
 
 // functions:
 
+	void			moving(void);
+	void			removing(void);
+	void			changing_xy(int x, int y);
+	bool			check_coords(int x, int y, AllObjects &src);
 
 // getters:
 	char			getType(void) const;
@@ -41,6 +46,8 @@ public:
 // setters:
 
 	void			setType(char c);
+	void			setAllX(int n);
+	void			setAllY(int n);
 	void			set_x1(int n);
 	void			set_x2(int n);
 	void			set_x3(int n);

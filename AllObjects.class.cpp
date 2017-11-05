@@ -1,7 +1,7 @@
 //		Created by Ivan Tsuman and Denys Vynokurov
 //					Rush00, Piscine CPP
 
-// #include "ft_retro.hpp"
+#include "ft_retro.hpp"
 #include "AllObjects.class.hpp"
 #include <iostream>
 //constructors and destructor
@@ -38,7 +38,7 @@ AllObjects::~AllObjects(void) {
 	return ;
 }
 
-// operators:
+// #################### operators ###########################
 
 AllObjects		&AllObjects::operator=(AllObjects const &rhs)
 {
@@ -60,6 +60,73 @@ AllObjects		&AllObjects::operator=(AllObjects const &rhs)
 	}
 	return (*this);
 }
+
+bool		AllObjects::operator==(AllObjects &rhs)
+{
+	if (this->check_coords(this->_x1, this->_y1, rhs) || this->check_coords(this->_x2, this->_y2, rhs) ||
+		this->check_coords(this->_x3, this->_y3, rhs) || this->check_coords(this->_x4, this->_y4, rhs) || 
+		this->check_coords(this->_x5, this->_y5, rhs) || this->check_coords(this->_x6, this->_y6, rhs))
+		return (1);
+	else
+		return (0);
+}
+
+
+// ################### functions #####################
+
+bool			AllObjects::check_coords(int x, int y, AllObjects &src)
+{
+	if ((x == src.get_x1() && y == src.get_y1()) || (x == src.get_x2() && y == src.get_y2()) ||
+		(x == src.get_x3() && y == src.get_y3()) || (x == src.get_x4() && y == src.get_y4()) || 
+		(x == src.get_x5() && y == src.get_y5()) || (x == src.get_x6() && y == src.get_y6()))
+		return (1);
+	else
+		return (0);
+}
+
+void			AllObjects::moving(void)
+{
+	mvaddch(this->get_y1(), this->get_x1(), this->getType());
+	mvaddch(this->get_y2(), this->get_x2(), this->getType());
+	mvaddch(this->get_y3(), this->get_x3(), this->getType());
+	mvaddch(this->get_y4(), this->get_x4(), this->getType());
+	mvaddch(this->get_y5(), this->get_x5(), this->getType());
+	mvaddch(this->get_y6(), this->get_x6(), this->getType());
+	return ;
+}
+
+
+
+void			AllObjects::removing(void)
+{
+	mvaddch(this->get_y1(), this->get_x1(), ' ');
+	mvaddch(this->get_y2(), this->get_x2(), ' ');
+	mvaddch(this->get_y3(), this->get_x3(), ' ');
+	mvaddch(this->get_y4(), this->get_x4(), ' ');
+	mvaddch(this->get_y5(), this->get_x5(), ' ');
+	mvaddch(this->get_y6(), this->get_x6(), ' ');
+	return ;
+}
+
+void			AllObjects::changing_xy(int x, int y)
+{
+	this->set_x1(this->get_x1() + x);
+	this->set_x2(this->get_x2() + x);
+	this->set_x3(this->get_x3() + x);
+	this->set_x4(this->get_x4() + x);
+	this->set_x5(this->get_x5() + x);
+	this->set_x6(this->get_x6() + x);
+
+	this->set_y1(this->get_y1() + y);
+	this->set_y2(this->get_y2() + y);
+	this->set_y3(this->get_y3() + y);
+	this->set_y4(this->get_y4() + y);
+	this->set_y5(this->get_y5() + y);
+	this->set_y6(this->get_y6() + y);
+	return ;
+}
+
+
 
 // #####################getters#####################
 
@@ -107,6 +174,25 @@ int				AllObjects::get_y6(void) const {
 
 // ##################setters#######################
 
+void			AllObjects::setAllX(int n) {
+	this->_x1 = n;
+	this->_x2 = n;
+	this->_x3 = n;
+	this->_x4 = n;
+	this->_x5 = n;
+	this->_x6 = n;
+	return ;
+}
+
+void			AllObjects::setAllY(int n) {
+	this->_y1 = n;
+	this->_y2 = n;
+	this->_y3 = n;
+	this->_y4 = n;
+	this->_y5 = n;
+	this->_y6 = n;
+	return ;
+}
 
 void			AllObjects::setType(char c) {
 	this->_type = c;

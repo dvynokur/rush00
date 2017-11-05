@@ -16,6 +16,9 @@
 # define BOLD_OFF	"\x1b[22m"
 
 # include <iostream>
+# include <ncurses.h>
+# include <string>
+# include <unistd.h>
 # include "Aircraft.class.hpp"
 # include "AllObjects.class.hpp"
 # include "EnemySmall.class.hpp"

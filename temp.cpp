@@ -5,10 +5,12 @@
 #include "ft_retro.hpp"
 
 WINDOW*	wnd;
+int score;
 // WINDOW* main_wnd;
 void	close();
 int 	init()
 {
+	score = 0;
 	srand(time(0));
 	wnd = initscr();
 	cbreak();
@@ -21,7 +23,7 @@ int 	init()
 	curs_set(0);
 
 	start_color();
-	init_pair(1, COLOR_BLACK, COLOR_CYAN);
+	init_pair(1, COLOR_WHITE, COLOR_BLACK);
 	wbkgd(wnd, COLOR_PAIR(1));
 	wattron(wnd, A_BOLD);
 	box(wnd, 0,0);
@@ -32,7 +34,6 @@ int 	init()
 
 void	run()
 {
-	move(5, 5);
 	int tick;
 	bool exit_requested = false;
 	int in_char;
@@ -41,21 +42,17 @@ void	run()
 	tick = 0;
 	getmaxyx(wnd, y, x);
 	Aircraft	ai(x, y);
-	EnemySmall	es(x, y);
 	EnemySmall	e[30];
 	Weapon		w[500];
 	int sp = 0;
-	int i = 0;
-
-	while (i < 30)
-	{
+	for (int i = 0; i < 30; i++)
 		e[i] = EnemySmall(x, y);
-		i++;
-	}
-	i = 1;
+	int i = 0;
+	clear();
 	while(1) {
+		mvwprintw(wnd, 2, x/2, "Score = %d   Lives = %d", score, ai.get_lives());
 		in_char = wgetch(wnd);
-		mvaddch(ai.get_y1(), ai.get_x1(), ' ');
+		ai.removing();
 		switch(in_char) {
 			case 27:
 				exit_requested = true;
@@ -71,69 +68,83 @@ void	run()
 				break;
 			case KEY_UP:
 			case 'w':
-				ai.set_y1(ai.get_y1() - 1);
+				ai.changing_xy(0, -1);
 				break;
 			case KEY_DOWN:
 			case 's':
-				ai.set_y1(ai.get_y1() + 1);
+				ai.changing_xy(0, 1);
 				break;
 			case KEY_LEFT:
 			case 'a':
-				ai.set_x1(ai.get_x1() - 1);
+				ai.changing_xy(-1, 0);
 				break;
 			case KEY_RIGHT:
 			case 'd':
-				ai.set_x1(ai.get_x1() + 1);
+				ai.changing_xy(1, 0);
 				break;
 			default:
 				break;
 		}
-		if (tick % 10 == 0)
-			i++;
-		if (i > 20)
-			i = 20;
+
 
 		for (int k = 0; k < i; k++)
 		{
 			if (ai.get_lives() == 0)
 				close();
-			if (ai.get_x1() == e[k].get_x1() && ai.get_y1() == e[k].get_y1())
+			if (ai == e[k] && e[k].get_flag() == 0)
+			{
+				e[k].set_flag(1);
 				ai.set_lives(ai.get_lives() - 1);
+			}
+			
 			for (int j = 0; j < sp; j++)
 			{
-				if (e[k].get_x1() == w[j].get_x() && e[k].get_y1() == w[j].get_y() && w[j].get_f() == 1)
+				// if (w[j] == e[k])
+				// 	printf("!!!\n");
+				if (w[j] == e[k] && w[j].get_f() == 1)
 				{
+					score++;
 					w[j].set_f(0);
-					e[k].set_x1(x - 1);
-					e[k].set_y1(rand() % y);
+					e[k].removing();
+					e[k].rewriting_xy(x, rand() % y);
 				}
 			}
 		}
 
+
 		for (int k = 0; k < i; k++)
 		{
-			mvaddch(e[k].get_y1(), e[k].get_x1(), ' ');
-			e[k].set_x1(e[k].get_x1() - 1);
-			mvaddch(e[k].get_y1(), e[k].get_x1(), e[k].getType());
-			if (e[k].get_x1() == 0)
-			{
-				e[k].set_x1(x - 1);
-				e[k].set_y1(rand() % y);
-			}
+			e[k].removing();
+			e[k].changing_xy(-1, 0);
+			e[k].moving();
+			if (e[k].get_x6() == 0)
+				e[k].rewriting_xy(x, (rand() % y) - 3);
 		}
+
+
+
+
 		for (int k = 0; k < sp && k < 500; k++)
 		{
+			// w[k].removing();
 			mvaddch(w[k].get_y(), w[k].get_x(), ' ');
+			// w[k].changing_xy(1, 0);
 			w[k].set_x(w[k].get_x() + 1);
 			if (w[k].get_f() == 1)
+				// w[k].moving();
 				mvaddch(w[k].get_y(), w[k].get_x(), w[k].getType());
 		}
-		mvaddch(es.get_y1(), es.get_x1(), ' ');
-		es.set_x1(es.get_x1() - 1);
-		mvaddch(es.get_y1(), es.get_x1(), es.getType());
 
-		mvaddch(ai.get_y1(), ai.get_x1(), ai.getType());
+
+
+		ai.moving();
+
 		tick++;
+		if (tick % 10 == 0)
+			i++;
+		if (i > 20)
+			i = 20;
+
 		box(wnd, 0,0);
 
 		refresh();

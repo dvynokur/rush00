@@ -17,6 +17,7 @@ public:
 	Weapon(Weapon const &src);
 	~Weapon();
 	Weapon		&operator=(Weapon const &rhs);
+	bool		operator==(AllObjects &rhs);
 
 	int		get_x(void) const;
 	int		get_y(void) const;

@@ -41,6 +41,16 @@ Weapon::~Weapon(void)
 	return ;
 }
 
+bool		Weapon::operator==(AllObjects &rhs)
+{
+	if (this->check_coords(this->_x, this->_y, rhs) ||
+		this->check_coords(this->_x + 1, this->_y, rhs))
+		return (1);
+	else
+		return (0);
+
+}
+
 Weapon		&Weapon::operator=(Weapon const &rhs)
 {
 	if (this != &rhs)
@@ -48,7 +58,7 @@ Weapon		&Weapon::operator=(Weapon const &rhs)
 		setType(rhs.getType());
 		set_x(rhs.get_x());
 		set_y(rhs.get_y());
-		set_f(rhs.get_f());
+		set_f(1);
 
 		// set_x1(rhs.get_x1());
 		// set_x2(rhs.get_x2());
