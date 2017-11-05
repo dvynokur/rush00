@@ -48,8 +48,31 @@ bool		Weapon::operator==(AllObjects &rhs)
 		return (1);
 	else
 		return (0);
-
 }
+
+bool		Weapon::operator==(EnemyBig &rhs)
+{
+	if (this->check_big_coords(this->_x, this->_y, rhs) ||
+		this->check_big_coords(this->_x + 1, this->_y, rhs))
+		return (1);
+	else
+		return (0);
+}
+
+bool		Weapon::check_big_coords(int x, int y, EnemyBig &src)
+{
+	if ((x == src.get_x1() && y == src.get_y1()) || (x == src.get_x2() && y == src.get_y2()) ||
+		(x == src.get_x3() && y == src.get_y3()) || (x == src.get_x4() && y == src.get_y4()) || 
+		(x == src.get_x5() && y == src.get_y5()) || (x == src.get_x6() && y == src.get_y6()) ||
+		(x == src.get_x7() && y == src.get_y7()) || (x == src.get_x8() && y == src.get_y8()) ||
+		(x == src.get_x9() && y == src.get_y9()) || (x == src.get_x10() && y == src.get_y10()) || 
+		(x == src.get_x11() && y == src.get_y11()) || (x == src.get_x12() && y == src.get_y12()) ||
+		(x == src.get_x13() && y == src.get_y13()))
+		return (1);
+	else
+		return (0);
+}
+
 
 Weapon		&Weapon::operator=(Weapon const &rhs)
 {
@@ -59,19 +82,6 @@ Weapon		&Weapon::operator=(Weapon const &rhs)
 		set_x(rhs.get_x());
 		set_y(rhs.get_y());
 		set_f(1);
-
-		// set_x1(rhs.get_x1());
-		// set_x2(rhs.get_x2());
-		// set_x3(rhs.get_x3());
-		// set_x4(rhs.get_x4());
-		// set_x5(rhs.get_x5());
-		// set_x6(rhs.get_x6());
-		// set_y1(rhs.get_y1());
-		// set_y2(rhs.get_y2());
-		// set_y3(rhs.get_y3());
-		// set_y4(rhs.get_y4());
-		// set_y5(rhs.get_y5());
-		// set_y6(rhs.get_y6());
 	}
 	return (*this);
 }

@@ -15,6 +15,8 @@
 # define BOLD_ON	"\x1b[1m"
 # define BOLD_OFF	"\x1b[22m"
 
+
+
 # include <iostream>
 # include <ncurses.h>
 # include <string>
@@ -24,5 +26,9 @@
 # include "EnemySmall.class.hpp"
 # include "EnemyBig.class.hpp"
 # include "Weapon.class.hpp"
+
+
+// WINDOW*	wnd;
+// int score;
 
 #endif

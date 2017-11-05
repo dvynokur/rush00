@@ -25,7 +25,7 @@ AllObjects::AllObjects(int width, int height)
 	set_y5(height / 2);
 	set_x6(3);
 	set_y6(height / 2);
-	std::cout << "Aircraft constructor called" << std::endl;
+	width = 0;
 	return ;
 }
 

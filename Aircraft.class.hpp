@@ -19,8 +19,10 @@ public:
 	Aircraft		&operator=(Aircraft const &rhs);
 	int				get_lives(void) const;
 	void			set_lives(int n);
+
 private:
 	int				_lives;
+
 };
 
 #endif

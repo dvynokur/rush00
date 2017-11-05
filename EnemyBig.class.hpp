@@ -26,6 +26,7 @@ public:
 	void			setAllY(int n);
 
 	int				get_flag(void) const;
+	int				get_lives(void) const;
 	int				get_x7(void) const;
 	int				get_x8(void) const;
 	int				get_x9(void) const;
@@ -43,6 +44,7 @@ public:
 
 
 	void			set_flag(int n);
+	void			set_lives(int n);
 	void			set_x7(int n);
 	void			set_x8(int n);
 	void			set_x9(int n);
@@ -58,6 +60,9 @@ public:
 	void			set_y12(int n);
 	void			set_y13(int n);
 
+
+	void			set_direction(int n);
+	int				get_direction(void) const;
 
 private:
 	int				_flag;
@@ -76,7 +81,8 @@ private:
 	int				_y12;
 	int				_y13;
 
-
+	int				_lives;
+	int				_direction;
 };
 
 #endif

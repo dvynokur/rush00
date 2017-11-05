@@ -25,6 +25,7 @@ EnemyBig::EnemyBig(void)
 EnemyBig::EnemyBig(int width, int height)
 {
 	int		r;
+	int		array[] = {1, -1};
 
 	r = rand () % height;
 	if (r == 0)
@@ -59,6 +60,8 @@ EnemyBig::EnemyBig(int width, int height)
 	set_x13(width);
 	set_y13(r - 2);
 	set_flag(0);
+	set_lives(5);
+	set_direction(array[rand() % 2]);
 }
 
 EnemyBig::EnemyBig(EnemyBig const &src) {
@@ -103,6 +106,8 @@ EnemyBig		&EnemyBig::operator=(EnemyBig const &rhs)
 		set_y12(rhs.get_y12());
 		set_y13(rhs.get_y13());
 		set_flag(rhs.get_flag());
+		set_lives(5);
+		set_direction(get_direction());
 	}
 	return (*this);
 }
@@ -126,6 +131,8 @@ bool		EnemyBig::operator==(AllObjects &rhs)
 
 void			EnemyBig::rewriting_xy(int x, int y)
 {
+	int array[] = {1, -1};
+
 	this->set_x1(x - 1);
 	this->set_y1(y - 1);
 	this->set_x2(x);
@@ -152,16 +159,36 @@ void			EnemyBig::rewriting_xy(int x, int y)
 	this->set_y12(y - 3);
 	this->set_x13(x);
 	this->set_y13(y - 2);
-
 	this->set_flag(0);
+	this->set_lives(5);
+	this->_direction = array[rand() % 2];
 }
+
+void			EnemyBig::set_direction(int n)
+{
+	this->_direction = n;
+	return ;
+}
+int				EnemyBig::get_direction(void) const
+{
+	return (this->_direction);
+}
+
+
 
 void			EnemyBig::set_flag(int n) {
 	this->_flag = n;
 	return ;
 }
+void			EnemyBig::set_lives(int n) {
+	this->_lives = n;
+	return ;
+}
 int				EnemyBig::get_flag(void) const {
 	return (this->_flag);
+}
+int				EnemyBig::get_lives(void) const {
+	return (this->_lives);
 }
 
 
@@ -278,6 +305,9 @@ void			EnemyBig::set_y13(int n) {
 
 void			EnemyBig::moving(void)
 {
+	// start_color();
+	// init_pair(2, COLOR_BLACK, COLOR_GREEN);
+	// wattron(wnd, A_BOLD);
 	mvaddch(this->get_y1(), this->get_x1(), this->getType());
 	mvaddch(this->get_y2(), this->get_x2(), this->getType());
 	mvaddch(this->get_y3(), this->get_x3(), this->getType());
@@ -291,6 +321,7 @@ void			EnemyBig::moving(void)
 	mvaddch(this->get_y11(), this->get_x11(), this->getType());
 	mvaddch(this->get_y12(), this->get_x12(), this->getType());
 	mvaddch(this->get_y13(), this->get_x13(), this->getType());
+	// wattroff(wnd, A_BOLD);
 	return ;
 }
 

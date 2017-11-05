@@ -18,6 +18,9 @@ public:
 	~Weapon();
 	Weapon		&operator=(Weapon const &rhs);
 	bool		operator==(AllObjects &rhs);
+	bool		operator==(EnemyBig &rhs);
+
+	bool		check_big_coords(int x, int y, EnemyBig &src);
 
 	int		get_x(void) const;
 	int		get_y(void) const;
