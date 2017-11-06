@@ -25,6 +25,8 @@ int 	init()
 
 	start_color();
 	init_pair(1, COLOR_WHITE, COLOR_BLACK);
+	init_pair(2, COLOR_YELLOW, COLOR_BLACK);
+	init_pair(3, COLOR_RED, COLOR_BLACK);
 	wbkgd(wnd, COLOR_PAIR(1));
 	wattron(wnd, A_BOLD);
 	box(wnd, 0,0);
@@ -215,7 +217,11 @@ void	run()
 			mvaddch(w[k].get_y(), w[k].get_x(), ' ');
 			w[k].set_x(w[k].get_x() + 1);
 			if (w[k].get_f() == 1)
+			{
+				attron(COLOR_PAIR(2));
 				mvaddch(w[k].get_y(), w[k].get_x(), w[k].getType());
+				attrset(A_NORMAL);
+			}
 		}
 		ai.moving();
 		tick++;

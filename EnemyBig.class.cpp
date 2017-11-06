@@ -308,6 +308,7 @@ void			EnemyBig::moving(void)
 	// start_color();
 	// init_pair(2, COLOR_BLACK, COLOR_GREEN);
 	// wattron(wnd, A_BOLD);
+	attron(COLOR_PAIR(3));
 	mvaddch(this->get_y1(), this->get_x1(), this->getType());
 	mvaddch(this->get_y2(), this->get_x2(), this->getType());
 	mvaddch(this->get_y3(), this->get_x3(), this->getType());
@@ -321,6 +322,7 @@ void			EnemyBig::moving(void)
 	mvaddch(this->get_y11(), this->get_x11(), this->getType());
 	mvaddch(this->get_y12(), this->get_x12(), this->getType());
 	mvaddch(this->get_y13(), this->get_x13(), this->getType());
+	attrset(A_NORMAL);
 	// wattroff(wnd, A_BOLD);
 	return ;
 }
